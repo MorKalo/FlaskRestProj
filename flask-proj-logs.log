@@ -1,0 +1,4 @@
+9648:Thread-2:2022-03-12 20:24:21,436:app:decorated:INFO:someone try to use function that needs token but token is missing
+7004:Thread-2:2022-03-13 00:02:51,807:app:decorated:INFO:someone try to use function that needs token but token is missing
+1896:Thread-3:2022-03-13 00:02:58,671:app:decorated:INFO:someone try to use function that needs token but token is missing
+6056:Thread-4:2022-03-13 00:03:54,261:app:decorated:INFO:someone try to use function that needs token but token is missing

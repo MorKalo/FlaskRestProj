@@ -2,3 +2,24 @@
 7004:Thread-2:2022-03-13 00:02:51,807:app:decorated:INFO:someone try to use function that needs token but token is missing
 1896:Thread-3:2022-03-13 00:02:58,671:app:decorated:INFO:someone try to use function that needs token but token is missing
 6056:Thread-4:2022-03-13 00:03:54,261:app:decorated:INFO:someone try to use function that needs token but token is missing
+17468:MainThread:2022-03-13 21:33:20,318:Db_config:create_all_entities:DEBUG:Created all sql tables.
+17468:MainThread:2022-03-13 21:33:20,320:Db_config:create_all_entities:DEBUG:Created all sql tables.
+8380:MainThread:2022-03-13 21:33:39,585:Db_config:create_all_entities:DEBUG:Created all sql tables.
+8380:MainThread:2022-03-13 21:33:39,586:Db_config:create_all_entities:DEBUG:Created all sql tables.
+18492:MainThread:2022-03-13 22:38:09,837:Db_config:create_all_entities:DEBUG:Created all sql tables.
+18492:MainThread:2022-03-13 22:38:09,838:Db_config:create_all_entities:DEBUG:Created all sql tables.
+11280:MainThread:2022-03-13 22:46:55,929:Db_config:create_all_entities:DEBUG:Created all sql tables.
+11280:MainThread:2022-03-13 22:46:55,930:Db_config:create_all_entities:DEBUG:Created all sql tables.
+20288:MainThread:2022-03-13 22:50:30,730:Db_config:create_all_entities:DEBUG:Created all sql tables.
+20288:MainThread:2022-03-13 22:50:30,731:Db_config:create_all_entities:DEBUG:Created all sql tables.
+1832:MainThread:2022-03-13 22:51:07,744:Db_config:create_all_entities:DEBUG:Created all sql tables.
+1832:MainThread:2022-03-13 22:51:07,745:Db_config:create_all_entities:DEBUG:Created all sql tables.
+808:MainThread:2022-03-13 22:51:20,679:Db_config:create_all_entities:DEBUG:Created all sql tables.
+808:MainThread:2022-03-13 22:51:20,680:Db_config:create_all_entities:DEBUG:Created all sql tables.
+22048:MainThread:2022-03-20 00:40:12,494:Db_config:create_all_entities:DEBUG:Created all sql tables.
+22048:MainThread:2022-03-20 00:40:12,495:Db_config:create_all_entities:DEBUG:Created all sql tables.
+20156:MainThread:2022-03-20 00:40:22,648:Db_config:create_all_entities:DEBUG:Created all sql tables.
+22512:MainThread:2022-03-20 00:42:59,938:Db_config:create_all_entities:DEBUG:Created all sql tables.
+16860:MainThread:2022-03-20 01:07:09,521:Db_config:create_all_entities:DEBUG:Created all sql tables.
+1548:MainThread:2022-03-20 01:09:06,066:Db_config:create_all_entities:DEBUG:Created all sql tables.
+24192:MainThread:2022-03-20 01:10:06,628:Db_config:create_all_entities:DEBUG:Created all sql tables.

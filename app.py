@@ -1,5 +1,9 @@
-# flask imports
-from flask import Flask, request, jsonify, make_response
+from DbRepo import DbRepo
+from Db_config import local_session, Base
+from Logger import Logger
+from Customer import Customer
+from User import User
+from flask import Flask, request, jsonify, make_response, Response
 from flask_sqlalchemy import SQLAlchemy
 import uuid  # for public id
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,30 +11,21 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from datetime import datetime, timedelta
 from functools import wraps
-from DbRepo import DbRepo
-from Db_config import local_session, Base
-from Logger import Logger
-from sqlalchemy import Column, Integer,BigInteger, String, DateTime, ForeignKey, UniqueConstraint
-
 
 
 app = Flask(__name__)
-dao = DbRepo('postgresql+psycopg2://postgres:admin@localhost/flask_proj_db.db')
+repo = DbRepo(local_session)
 logger = Logger.get_instance()
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SECRET_KEY'] = 'my secret key'
 
-# creates SQLALCHEMY object
-db = sqlalchemy(app)
-repo=DbRepo(local_session)
+def convert_to_json(_list: list):
+    json_list = []
+    for i in _list:
+        _dict = i.__dict__
+        _dict.pop('_sa_instance_state', None)
+        json_list.append(_dict)
+    return json_list
 
-
-# Database ORMs
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    public_id = db.Column(db.String(50), unique=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(70), unique=True)
-    password = db.Column(db.String(80))
 
 @app.route("/")
 def homepage():
@@ -51,24 +46,28 @@ def token_required(f):
             token = token.removeprefix('Bearer ')
         # return 401 if token is not passed
         if not token:
-            logger.logger.info('someone try to use function that needs token but token is missing')
+            logger.logger.info('error 401, someone try to use function that needs token but token is missing')
             return jsonify({'message': 'Token is missing'}), 401
         try:
             # decoding the payload to fetch the stored details
             data = jwt.decode(token, app.config['SECRET_KEY'])
-            current_user =dao.get_user_by_public_id('public_id')
-                #User.query \
-                #.filter_by(public_id=data['public_id']) \
-                #.first()
+            current_user =repo.update_by_column_value(User, User.public_id, data['public_id'],
+                                                      data['public_id']).first()
         except:
-            logger.logger.warning('someone try to use function that needs token but token is invaild')
+            logger.logger.warning('error 401, someone try to use function that needs token but token is invaild')
             return jsonify({
                 'message': 'Token is invalid !!'
             }), 401
-
+        # passes the current logged in user into the endpoint so
+        # you have access to them
+        # (you also just pass the data of the token, or whatever
+        #  you want)
         return f(current_user, *args, **kwargs)
-
     return decorated
+
+
+
+
 
 @app.route('/signup', methods=['POST'])
 def signup():

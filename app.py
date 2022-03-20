@@ -69,6 +69,7 @@ def token_required(f):
 @app.route('/customers', methods=['GET', 'POST'])
 def get_or_post_customers():
     if request.method == 'GET':
+        logger.logger.debug(f' get all customer is about to happen ')
         return jsonify(convert_to_json(repo.get_all_customers()))
     if request.method =='POST':
         customer_data= request.get_json()
@@ -78,37 +79,55 @@ def get_or_post_customers():
         return make_response('Customer Created!', 201)
 
 
-@app.route('/signup', methods=['POST'])
-def signup():
-    form_data = request.form
+@app.route('/customers/<int:id>', methods=['GET', 'PUT', 'DELETE', 'PATCH'])
+def get_customer_by_id(id):
+    if request.method == 'GET':
+        customer=repo.get_customer_by_id(id)
+        logger.logger.debug(f' get customer by id for id num{id} is about to happen ')
+        return jsonify(convert_to_json(customer))
+    if request.method == 'PUT':
+        customer = request.get_json()
+        repo.put_customer_by_id(customer)
+        return
+    if request.method == 'DELETE':
+        repo.delete_customer_by_id(id)
+        return make_response('Customer deleted!', 201)
+    if request.method == 'PATCH':
+        pass
+    #    customer = convert_to_json(request.get_json())
+    #    return repo.patch_by_id(customer)
+
+#@app.route('/signup', methods=['POST'])
+#def signup():
+#    form_data = request.form
 
     # gets name, email and password
-    name = form_data.get('name')
-    email = form_data.get('email')
-    password = form_data.get('password')
+ #   name = form_data.get('name')
+  #  email = form_data.get('email')
+   # password = form_data.get('password')
 
     # check if user exists
     #userex = User.query \
     #    .filter_by(email=email) \
      #   .first()
-    userex=User.query.filter_by(email)
+   # userex=User.query.filter_by(email)
 
-    if userex:
-        return make_response('User already exists. Please Log in.', 202)
+    #if userex:
+     #   return make_response('User already exists. Please Log in.', 202)
 
-    else:
+    #else:
 
-        userex = User(
-            public_id=str(uuid.uuid4()),
-            name=name,
-            email=email,
-            password=generate_password_hash(password)
-        )
+#        userex = User(
+ #           public_id=str(uuid.uuid4()),
+  #          name=name,
+   #         email=email,
+    #        password=generate_password_hash(password)
+     #   )
 
-        db.session.add(userex)
-        db.session.commit()
+      #  db.session.add(userex)
+       # db.session.commit()
 
-        return make_response('Successfully registered.', 201)
+        #return make_response('Successfully registered.', 201)
 
 
 app.run()

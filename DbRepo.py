@@ -6,6 +6,9 @@ from Logger import Logger
 from Customer import Customer
 
 
+logger = Logger.get_instance()
+
+
 class DbRepo:
 
     def __init__(self, local_session):
@@ -42,12 +45,16 @@ class DbRepo:
     def delete_customer_by_id(self, id):
         self.local_session.query(Customer).filter(Customer.id == id).delete(synchronize_session=False)
         self.local_session.commit()
+        logger.logger.info(f' delete customer id {id} ')
+
 
     def put_customer_by_id(self, id, data):
         object=self.local_session.query(Customer).filter(Customer.id==id)
         if not object:
             self.local_session.add(object)
+        logger.logger.debug(f' someone trying to activate put func and the customer dosent exist, so we add the customer {object} ')
         object.update(data)
+        logger.logger.debug(f' updating data  {data} for customer id{id}')
         self.local_session.commit()
 
     def patch_customer_by_id(self, id, data):

@@ -27,3 +27,8 @@
 18132:Thread-2:2022-03-20 02:02:03,450:app:get_or_post_customers:INFO: new customer created. http://127.0.0.1:5000/customers
 22048:Thread-1:2022-03-20 02:03:10,585:app:get_or_post_customers:INFO: new customer created.
 <id="7", full_name="dani", address="nurit 582"> http://127.0.0.1:5000/customers, 
+10884:Thread-1:2022-03-20 02:04:34,775:app:get_or_post_customers:DEBUG: get all customer is about to happen 
+22056:Thread-1:2022-03-20 02:12:49,203:app:get_customer_by_id:DEBUG: get customer by id is about to happen 
+11360:Thread-1:2022-03-20 02:14:46,794:app:get_customer_by_id:DEBUG: get customer by id for id num4 is about to happen 
+25364:Thread-1:2022-03-20 02:28:07,418:DbRepo:delete_customer_by_id:INFO: delete customer id 2 
+25760:Thread-1:2022-03-20 02:30:20,929:DbRepo:delete_customer_by_id:INFO: delete customer id 1 

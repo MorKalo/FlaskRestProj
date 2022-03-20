@@ -156,14 +156,10 @@ def login():
          # check password
         if not check_password_hash(user[0].password, form_data.get('password')):
             return make_response('Could not verify', 403, {'WWW-Authenticate': 'Basic realm ="Wrong Password!"'})
-        else:
-            return make_response('this part is ok', 201)
-
     # generates the JWT Token
-    #token = jwt.encode({'public_id': user[0].public_id,'exp': datetime.utcnow() + timedelta(minutes=15)},
-    #                   app.config['SECRET_KEY'])
-
-    #return make_response(jsonify({'token': token.decode('UTF-8')}), 201)
+        token = jwt.encode({'public_id': user[0].public_id,'exp': datetime.utcnow() + timedelta(minutes=15)},
+                       app.config['SECRET_KEY'])
+        return make_response(jsonify({'token': token.decode('UTF-8')}), 201)
 
 if __name__ == "__main__":
     app.run(debug=True)

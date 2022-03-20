@@ -9,7 +9,7 @@ class User(Base):
     id=Column(Integer(), primary_key=True, autoincrement=True)
     public_id=Column(String(200),unique=True )
     username=Column(String(50), nullable=False)
-    email=Column(String(50), nullable=False, unique=True)
+    email=Column(String(50), unique=True)
     password=Column(String(200), nullable=False)
 
 

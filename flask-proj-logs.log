@@ -32,3 +32,7 @@
 11360:Thread-1:2022-03-20 02:14:46,794:app:get_customer_by_id:DEBUG: get customer by id for id num4 is about to happen 
 25364:Thread-1:2022-03-20 02:28:07,418:DbRepo:delete_customer_by_id:INFO: delete customer id 2 
 25760:Thread-1:2022-03-20 02:30:20,929:DbRepo:delete_customer_by_id:INFO: delete customer id 1 
+7248:MainThread:2022-03-20 22:32:43,003:Db_config:create_all_entities:DEBUG:Created all sql tables.
+15344:MainThread:2022-03-20 22:33:36,505:Db_config:create_all_entities:DEBUG:Created all sql tables.
+28060:MainThread:2022-03-20 22:35:29,607:Db_config:create_all_entities:DEBUG:Created all sql tables.
+20672:Thread-3:2022-03-20 22:59:57,663:app:get_or_post_customers:DEBUG: get all customer is about to happen 

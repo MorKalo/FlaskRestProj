@@ -14,7 +14,7 @@ class Init_db():
 
 
     def reset_all_db(self):
-        self.repo.drop_all_table()
+     #   self.repo.drop_all_table()
         create_all_entities()
 
     def insert_Data(self):

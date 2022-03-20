@@ -99,8 +99,8 @@ def get_customer_by_id(id):
 @app.route('/customers', methods=['GET', 'POST'])
 def get_or_post_customer_by_params():
     if request.method == 'GET':
-        search_args  = request.args.to_dict()
-        customer = jsonify(repo.get_all_customers(search_args ))
+        search_args= request.args.to_dict()
+        customer = jsonify(repo.get_all_customers(search_args))
         if len(search_args) == 0:
             return make_response(jsonify(customer),200, mimetype='application/json')
         results = []
@@ -120,37 +120,50 @@ def get_or_post_customer_by_params():
         logger.logger.ino(f'creating new customer {request.base_url}/{new_customer["id"]}')
         return Response(f'"new-item": "{request.base_url}"/"{new_customer["id"]}"', status=201,
                         mimetype="application/json")
-#@app.route('/signup', methods=['POST'])
-#def signup():
-#    form_data = request.form
 
-    # gets name, email and password
- #   name = form_data.get('name')
-  #  email = form_data.get('email')
-   # password = form_data.get('password')
+@app.route('/signup', methods=['POST'])
+def signup():
+    form_data = request.form
+    # gets name, email and password from request
+    username=form_data.get('username')
+    email = form_data.get('email')
+    password = form_data.get('password')
 
-    # check if user exists
-    #userex = User.query \
-    #    .filter_by(email=email) \
-     #   .first()
-   # userex=User.query.filter_by(email)
-
-    #if userex:
-     #   return make_response('User already exists. Please Log in.', 202)
-
-    #else:
-
-#        userex = User(
- #           public_id=str(uuid.uuid4()),
-  #          name=name,
-   #         email=email,
-    #        password=generate_password_hash(password)
-     #   )
-
-      #  db.session.add(userex)
-       # db.session.commit()
-
-        #return make_response('Successfully registered.', 201)
+    # check if user exists in db
+    user = repo.get_user_by_username(username)
+    if user:
+        return make_response('User already exists. Please Log in.', 202)
+    else:
+         #create new user
+        new_user = User(public_id=str(uuid.uuid4()), username=username, email=email,
+            password=generate_password_hash(password))
+        repo.post(new_user)
+        return make_response('You are successfully registered.', 201)
 
 
-app.run()
+@app.route('/login', methods=['POST'])
+def login():
+    form_data = request.form
+    # check that no field is missing
+    if not form_data.get('username') or not form_data.get('password'):
+        return make_response('Could not verify', 401,
+                             {'WWW-Authenticate': 'Basic realm ="Login required!"'})
+    else:
+    # check if user exists in db
+        user = repo.get_user_by_username(form_data.get('username'))
+        if not user:
+            return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm ="User does not exist!"'})
+         # check password
+        if not check_password_hash(user[0].password, form_data.get('password')):
+            return make_response('Could not verify', 403, {'WWW-Authenticate': 'Basic realm ="Wrong Password!"'})
+        else:
+            return make_response('this part is ok', 201)
+
+    # generates the JWT Token
+    #token = jwt.encode({'public_id': user[0].public_id,'exp': datetime.utcnow() + timedelta(minutes=15)},
+    #                   app.config['SECRET_KEY'])
+
+    #return make_response(jsonify({'token': token.decode('UTF-8')}), 201)
+
+if __name__ == "__main__":
+    app.run(debug=True)

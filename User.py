@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer,BigInteger, String, DateTime, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, Integer,BigInteger, String, VARCHAR,DateTime, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship, backref
 from Db_config import Base
 
@@ -7,10 +7,10 @@ class User(Base):
     __tablename__ = 'users'
 
     id=Column(Integer(), primary_key=True, autoincrement=True)
-    public_id=Column(String(50),unique=True )
+    public_id=Column(String(200),unique=True )
     username=Column(String(50), nullable=False)
-    email=Column(String(70), nullable=False, unique=True)
-    password=Column(String(100), nullable=False)
+    email=Column(String(50), nullable=False, unique=True)
+    password=Column(String(200), nullable=False)
 
 
     def as_dict(self):

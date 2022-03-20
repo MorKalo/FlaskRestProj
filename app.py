@@ -83,20 +83,43 @@ def get_or_post_customers():
 def get_customer_by_id(id):
     if request.method == 'GET':
         customer=repo.get_customer_by_id(id)
-        logger.logger.debug(f' get customer by id for id num{id} is about to happen ')
         return jsonify(convert_to_json(customer))
     if request.method == 'PUT':
         customer = request.get_json()
         repo.put_customer_by_id(customer)
-        return
+        return make_response('Action performed successfully', 201)
     if request.method == 'DELETE':
         repo.delete_customer_by_id(id)
         return make_response('Customer deleted!', 201)
     if request.method == 'PATCH':
-        pass
-    #    customer = convert_to_json(request.get_json())
-    #    return repo.patch_by_id(customer)
+        customer = convert_to_json(request.get_json())
+        repo.patch_customer_by_id(customer)
+        return make_response('Action performed successfully', 201)
 
+@app.route('/customers', methods=['GET', 'POST'])
+def get_or_post_customer_by_params():
+    if request.method == 'GET':
+        search_args  = request.args.to_dict()
+        customer = jsonify(repo.get_all_customers(search_args ))
+        if len(search_args) == 0:
+            return make_response(jsonify(customer),200, mimetype='application/json')
+        results = []
+        for c in customer:
+            if "fullname" in search_args.keys():
+                if c["fullname"].find(search_args["fullname"]) < 0:
+                    continue
+            if "address" in search_args.keys() and c["address"].find(search_args["address"]) < 0:
+                continue
+            results.append(c)
+        if len(results) == 0:
+            return Response("[]", status=404, mimetype='application/json')
+        return Response(jsonify(customer), status=200, mimetype='application/json')
+    if request.method == 'POST':
+        new_customer = request.get_json()
+        repo.post(jsonify(new_customer))
+        logger.logger.ino(f'creating new customer {request.base_url}/{new_customer["id"]}')
+        return Response(f'"new-item": "{request.base_url}"/"{new_customer["id"]}"', status=201,
+                        mimetype="application/json")
 #@app.route('/signup', methods=['POST'])
 #def signup():
 #    form_data = request.form

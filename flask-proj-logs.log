@@ -23,3 +23,7 @@
 16860:MainThread:2022-03-20 01:07:09,521:Db_config:create_all_entities:DEBUG:Created all sql tables.
 1548:MainThread:2022-03-20 01:09:06,066:Db_config:create_all_entities:DEBUG:Created all sql tables.
 24192:MainThread:2022-03-20 01:10:06,628:Db_config:create_all_entities:DEBUG:Created all sql tables.
+23792:Thread-1:2022-03-20 02:01:24,145:app:get_or_post_customers:INFO: new customer created. http://127.0.0.1:5000/customers
+18132:Thread-2:2022-03-20 02:02:03,450:app:get_or_post_customers:INFO: new customer created. http://127.0.0.1:5000/customers
+22048:Thread-1:2022-03-20 02:03:10,585:app:get_or_post_customers:INFO: new customer created.
+<id="7", full_name="dani", address="nurit 582"> http://127.0.0.1:5000/customers, 

@@ -66,7 +66,16 @@ def token_required(f):
     return decorated
 
 
-
+@app.route('/customers', methods=['GET', 'POST'])
+def get_or_post_customers():
+    if request.method == 'GET':
+        return jsonify(convert_to_json(repo.get_all_customers()))
+    if request.method =='POST':
+        customer_data= request.get_json()
+        new_customer = Customer(id=None, fullname=customer_data["fullname"], address=customer_data["address"])
+        repo.post(new_customer)
+        logger.logger.info(f' new customer created.{new_customer} {request.base_url}, ')
+        return make_response('Customer Created!', 201)
 
 
 @app.route('/signup', methods=['POST'])

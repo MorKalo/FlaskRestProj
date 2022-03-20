@@ -18,8 +18,8 @@ class DbRepo:
     def get_all_customers(self):
         return self.local_session.query(Customer).all()
 
-    def post(self, object):
-        self.local_session.add(object)
+    def post(self, object_):
+        self.local_session.add(object_)
         self.local_session.commit()
 
     def update_by_column_value(self, table_class, column_name, value, data):
